@@ -14,20 +14,29 @@ const Register = () => {
         // // make a popup alert showing the "submitted" text
         // alert("Submited");
         // set configurations
-    const configuration = {
-        method: "post",
-        url: "https://nodejs-mongodb-auth-app.herokuapp.com/register",
-        data: {
-          email,
-          password,
-        },
-      };
+        const configuration = {
+            method: "post",
+            url: "https://authappbackend-acef5587e328.herokuapp.com/register",
+            data: {
+                email,
+                password,
+            },
+        };
+        // make the API call
+        axios(configuration)
+            .then((result) => {
+                setRegister(true);
+            })
+            .catch((error) => {
+                error = new Error();
+            });
+
     }
 
     return (
         <>
             <h2>Register</h2>
-            <Form onSubmit={(e)=>handleSubmit(e)}>
+            <Form onSubmit={(e) => handleSubmit(e)}>
                 {/* email */}
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -53,13 +62,20 @@ const Register = () => {
                 </Form.Group>
 
                 {/* submit button */}
-                <Button 
-                variant="primary" 
-                type="submit"
-                onClick={(e) => handleSubmit(e)}
+                <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={(e) => handleSubmit(e)}
                 >
-                    Submit
+                    Register
                 </Button>
+
+                {/* display success message */}
+                {register ? (
+                    <p className="text-success">You Are Registered Successfully</p>
+                ) : (
+                    <p className="text-danger">You Are Not Registered</p>
+                )}
             </Form>
 
         </>
